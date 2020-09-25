@@ -1,5 +1,23 @@
-apply plugin: 'java'
+plugins {
+    id "com.github.johnrengelman.shadow" version "6.0.0"
+    id "java"
+}
+
+shadowJar {
+    manifest {
+        attributes(
+                'Premain-Class': 'ua.arlabunakty.agent.Agent',
+                'Can-Redefine-Classes': 'false',
+                'Can-Retransform-Classes': 'true',
+                'Can-Set-Native-Method-Prefix': 'false',
+                'Implementation-Title': "StatisticExtensionAgent",
+                'Implementation-Version': rootProject.version
+        )
+    }
+}
 
 dependencies {
-
+    implementation 'org.javassist:javassist:3.27.0-GA'
+    implementation 'io.undertow:undertow-core:2.1.0.Final'
+    implementation 'io.undertow:undertow-servlet:2.1.0.Final'
 }

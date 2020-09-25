@@ -3,9 +3,9 @@ package ua.arlabunakty;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DefaulController {
@@ -16,31 +16,38 @@ public class DefaulController {
         this.appName = appName;
     }
 
+    /**
+     * Greeting endpoint for Guest user.
+     *
+     * @return greeting configured model and view;
+     */
     @GetMapping("/")
-    public String homePage(Model model) {
-        model.addAttribute("appName", appName);
-        model.addAttribute("name", "Guest");
-        return "home";
+    public ModelAndView homePage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("appName", appName);
+        modelAndView.addObject("name", "Guest");
+        modelAndView.setViewName("home");
+        return modelAndView;
     }
 
     /**
-     * Return greeting template for user provided name with random delay.
+     * Returns greeting template for user provided name with random delay.
      *
-     * @param name  - user name
-     * @param model - template model attributes holder
-     * @return template name
+     * @param name  - user name from query parameters
+     * @return greeting configured model and view
      * @throws InterruptedException when during sleep period thread was interrupted.
      */
     @GetMapping("/hello")
-    public String homePageWithUserGreeting(
-            @RequestParam(name = "name", required = false, defaultValue = "")
-                    String name, Model model) throws InterruptedException {
+    public ModelAndView homePageWithUserGreeting(
+            @RequestParam(name = "name", required = false, defaultValue = "") String name) throws InterruptedException {
         Thread.sleep(new Random().nextInt(5000));
 
-        model.addAttribute("appName", appName);
-        model.addAttribute("name", name);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("appName", appName);
+        modelAndView.addObject("name", name);
+        modelAndView.setViewName("home");
 
-        return "home";
+        return modelAndView;
     }
 }
 

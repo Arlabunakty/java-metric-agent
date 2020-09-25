@@ -8,7 +8,9 @@ allprojects {
     group 'ua.arlabunakty'
     version '1.0-SNAPSHOT'
 
+    apply plugin: 'java'
     apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
 
     checkstyle {
         toolVersion = '8.36.1'
@@ -16,14 +18,20 @@ allprojects {
         ignoreFailures = true
         showViolations = true
     }
+
+    pmd {
+        consoleOutput = true
+        toolVersion = "6.21.0"
+        rulePriority = 5
+        ruleSetFiles = rootProject.files('config/pmd/pmd-rules.xml')
+        ruleSets = []
+    }
 }
 
 subprojects {
     repositories {
         mavenCentral()
     }
-
-    apply plugin: 'java'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -38,6 +46,8 @@ subprojects {
 
     dependencies {
         testImplementation "org.junit.jupiter:junit-jupiter-api:${JUNIT_VERSION}"
+        testImplementation 'org.mockito:mockito-core:2.21.0'
+        testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${JUNIT_VERSION}"
     }
 }
