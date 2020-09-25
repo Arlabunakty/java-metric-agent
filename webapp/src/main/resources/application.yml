@@ -2,9 +2,6 @@ server:
   port: 3030
 
 spring:
+  mainbanner-mode: off
   application.name: Bootstrap Spring Boot
-  thymeleaf:
-    enabled: true
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false
+  freemarker.template-loader-path=classpath: /templates

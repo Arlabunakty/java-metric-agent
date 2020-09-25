@@ -19,6 +19,7 @@ public class DefaulController {
     @GetMapping("/")
     public String homePage(Model model) {
         model.addAttribute("appName", appName);
+        model.addAttribute("name", "Guest");
         return "home";
     }
 
