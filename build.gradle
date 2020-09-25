@@ -7,6 +7,15 @@ buildscript {
 allprojects {
     group 'ua.arlabunakty'
     version '1.0-SNAPSHOT'
+
+    apply plugin: 'checkstyle'
+
+    checkstyle {
+        toolVersion = '8.36.1'
+        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+        ignoreFailures = true
+        showViolations = true
+    }
 }
 
 subprojects {
