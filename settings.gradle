@@ -1,0 +1,4 @@
+rootProject.name = 'java-metric-agent'
+
+include "agent"
+include "webapp"
