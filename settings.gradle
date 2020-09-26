@@ -3,9 +3,11 @@ rootProject.name = 'java-metric-agent'
 include "agent"
 include "webapp"
 
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-        termsOfServiceAgree = 'yes'
+if (hasProperty('gradleEnterprise')) {
+    gradleEnterprise {
+        buildScan {
+            termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+            termsOfServiceAgree = 'yes'
+        }
     }
 }
