@@ -4,11 +4,11 @@ public class WrittenContentTracker {
     private long accumulator;
 
     public void trackContentLength(boolean content) {
-        updateWrittenContent(content ? 4 : 5);
+        addWrittenContent(content ? 4 : 5);
     }
 
     public void trackContentLength(char content) {
-        updateWrittenContent(1);
+        addWrittenContent(1);
     }
 
     public void trackContentLength(Object content) {
@@ -16,11 +16,11 @@ public class WrittenContentTracker {
     }
 
     public void trackContentLength(byte[] content) {
-        updateWrittenContent((content != null) ? content.length : 0);
+        addWrittenContent((content != null) ? content.length : 0);
     }
 
     public void trackContentLength(char... content) {
-        updateWrittenContent((content != null) ? content.length : 0);
+        addWrittenContent((content != null) ? content.length : 0);
     }
 
     public void trackContentLength(int content) {
@@ -37,14 +37,14 @@ public class WrittenContentTracker {
 
     public void trackContentLength(String content) {
         int contentLength = (content != null) ? content.length() : 4;
-        updateWrittenContent(contentLength);
+        addWrittenContent(contentLength);
     }
 
     public void trackContentLengthNewLine() {
         trackContentLength("\r\n");
     }
 
-    public void updateWrittenContent(long contentLengthToWrite) {
+    public void addWrittenContent(long contentLengthToWrite) {
         accumulator += contentLengthToWrite;
     }
 

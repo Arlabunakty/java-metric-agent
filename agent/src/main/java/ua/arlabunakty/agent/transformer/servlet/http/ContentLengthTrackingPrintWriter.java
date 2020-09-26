@@ -51,7 +51,7 @@ public class ContentLengthTrackingPrintWriter extends PrintWriter {
 
     @Override
     public void write(char[] buf, int off, int len) {
-        tracker.updateWrittenContent(len);
+        tracker.addWrittenContent(len);
         this.delegate.write(buf, off, len);
     }
 
@@ -63,7 +63,7 @@ public class ContentLengthTrackingPrintWriter extends PrintWriter {
 
     @Override
     public void write(String s, int off, int len) {
-        tracker.updateWrittenContent(len);
+        tracker.addWrittenContent(len);
         this.delegate.write(s, off, len);
     }
 
@@ -218,13 +218,13 @@ public class ContentLengthTrackingPrintWriter extends PrintWriter {
 
     @Override
     public PrintWriter append(CharSequence csq) {
-        tracker.updateWrittenContent(csq.length());
+        tracker.addWrittenContent(csq.length());
         return this.delegate.append(csq);
     }
 
     @Override
     public PrintWriter append(CharSequence csq, int start, int end) {
-        tracker.updateWrittenContent(end - start);
+        tracker.addWrittenContent(end - start);
         return this.delegate.append(csq, start, end);
     }
 

@@ -20,7 +20,7 @@ public class HistoryDataDao {
 
     public Collection<HistoryDataModel> findByCategory(String category) {
         return collection.stream()
-                .filter(element -> category.equals(element.getCategory()))
+                .filter(element -> element.getCategory().equals(category))
                 .collect(Collectors.toList());
     }
 }

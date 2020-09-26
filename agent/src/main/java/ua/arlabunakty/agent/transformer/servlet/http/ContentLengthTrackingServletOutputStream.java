@@ -112,7 +112,7 @@ public class ContentLengthTrackingServletOutputStream extends ServletOutputStrea
 
     @Override
     public void write(byte[] b, int off, int len) throws IOException {
-        tracker.updateWrittenContent(len);
+        tracker.addWrittenContent(len);
         this.delegate.write(b, off, len);
     }
 

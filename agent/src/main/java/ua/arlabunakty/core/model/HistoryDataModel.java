@@ -11,11 +11,7 @@ public final class HistoryDataModel {
     public HistoryDataModel(double value, String category, String... tags) {
         this.value = value;
         this.category = category;
-        if (tags == null) {
-            this.tags = new String[0];
-        } else {
-            this.tags = Arrays.copyOf(tags, tags.length);
-        }
+        this.tags =  Arrays.copyOf(tags, tags.length);
     }
 
     public double getValue() {
@@ -24,6 +20,10 @@ public final class HistoryDataModel {
 
     public String getCategory() {
         return category;
+    }
+
+    public String[] getTags() {
+        return Arrays.copyOf(tags, tags.length);
     }
 
     public boolean containTag(String tag) {

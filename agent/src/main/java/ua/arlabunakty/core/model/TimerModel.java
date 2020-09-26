@@ -16,11 +16,7 @@ public final class TimerModel {
         this.clock = clock;
         this.consumer = consumer;
         this.category = category;
-        if (tags == null) {
-            this.tags = new String[0];
-        } else {
-            this.tags = Arrays.copyOf(tags, tags.length);
-        }
+        this.tags = Arrays.copyOf(tags, tags.length);
     }
 
     public void stopAndRecord() {

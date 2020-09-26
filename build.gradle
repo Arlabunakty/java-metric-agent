@@ -21,20 +21,21 @@ allprojects {
 
     pmd {
         consoleOutput = true
-        toolVersion = "6.21.0"
+        toolVersion = "6.26.0"
         rulePriority = 5
         ruleSetFiles = rootProject.files('config/pmd/pmd-rules.xml')
         ruleSets = []
+        sourceSets = [sourceSets.main]
     }
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 subprojects {
     repositories {
         mavenCentral()
     }
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
 
     ext {
         JUNIT_VERSION = '5.3.1'
@@ -49,5 +50,6 @@ subprojects {
         testImplementation 'org.mockito:mockito-core:2.21.0'
         testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${JUNIT_VERSION}"
+        testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.4.2'
     }
 }

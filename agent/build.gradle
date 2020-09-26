@@ -1,6 +1,11 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "6.0.0"
-    id "java"
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'java'
+    id 'jacoco'
+}
+
+jacoco {
+    toolVersion = "0.8.5"
 }
 
 shadowJar {
@@ -10,7 +15,7 @@ shadowJar {
                 'Can-Redefine-Classes': 'false',
                 'Can-Retransform-Classes': 'true',
                 'Can-Set-Native-Method-Prefix': 'false',
-                'Implementation-Title': "StatisticExtensionAgent",
+                'Implementation-Title': 'StatisticExtensionAgent',
                 'Implementation-Version': rootProject.version
         )
     }
