@@ -76,7 +76,8 @@ class IndexControllerIntegrationTest {
         assertNotNull(metricsHtmlPage, "Metric page should be non null");
 
         Document document = Jsoup.parse(metricsHtmlPage);
-        long requestOperationTime = (long) Double.parseDouble(document.select("td.requestOperationTime").text());
+        long requestOperationTime = (long) Double.parseDouble(
+                document.select("td.requestOperationTime").text());
         long responseBodyLength = (long) Double.parseDouble(document.select("td.responseBodyLength").text());
 
         return new MetricsByTraceId(requestOperationTime, responseBodyLength);
