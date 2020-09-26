@@ -12,7 +12,7 @@ dependencies {
 bootRun.dependsOn(':agent:shadowJar')
 integrationTest.dependsOn(':agent:shadowJar')
 
-def javaAgentJvmArg = "-javaagent:./../agent/build/libs/agent-1.0-SNAPSHOT-all.jar"
+def javaAgentJvmArg = "-javaagent:./../agent/build/libs/agent-all.jar"
 
 bootRun {
     jvmArgs = [javaAgentJvmArg]

@@ -9,6 +9,7 @@ jacoco {
 }
 
 shadowJar {
+    archiveVersion = ''
     manifest {
         attributes(
                 'Premain-Class': 'ua.arlabunakty.agent.Agent',
