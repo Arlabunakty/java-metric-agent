@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class DefaulController {
+public class IndexController {
 
     private final String appName;
 
-    public DefaulController(@Value("${spring.application.name}") String appName) {
+    public IndexController(@Value("${spring.application.name}") String appName) {
         this.appName = appName;
     }
 
@@ -22,7 +22,7 @@ public class DefaulController {
      * @return greeting configured model and view;
      */
     @GetMapping("/")
-    public ModelAndView homePage() {
+    public ModelAndView indexPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("appName", appName);
         modelAndView.addObject("name", "Guest");
@@ -38,7 +38,7 @@ public class DefaulController {
      * @throws InterruptedException when during sleep period thread was interrupted.
      */
     @GetMapping("/hello")
-    public ModelAndView homePageWithUserGreeting(
+    public ModelAndView indexPageWithUserGreeting(
             @RequestParam(name = "name", required = false, defaultValue = "") String name) throws InterruptedException {
         Thread.sleep(new Random().nextInt(5000));
 
