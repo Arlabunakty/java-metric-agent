@@ -1,14 +1,23 @@
 plugins {
     id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-freemarker:2.3.4.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 bootRun.dependsOn(':agent:shadowJar')
+integrationTest.dependsOn(':agent:shadowJar')
+
+def javaAgentJvmArg = "-javaagent:./../agent/build/libs/agent-1.0-SNAPSHOT-all.jar"
 
 bootRun {
-    jvmArgs = ["-javaagent:./../agent/build/libs/agent-1.0-SNAPSHOT-all.jar"]
+    jvmArgs = [javaAgentJvmArg]
+}
+
+integrationTest {
+    jvmArgs = [javaAgentJvmArg]
 }

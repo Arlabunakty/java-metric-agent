@@ -37,19 +37,37 @@ subprojects {
         mavenCentral()
     }
 
+    sourceSets {
+        integrationTest {
+            compileClasspath += sourceSets.main.output + configurations.testCompile
+            runtimeClasspath += output + compileClasspath + configurations.testRuntime
+        }
+    }
+
     ext {
         JUNIT_VERSION = '5.3.1'
     }
 
     test {
-        useJUnitPlatform()
+        useJUnitPlatform {
+            excludeTags 'integrationTest'
+        }
     }
 
+    task integrationTest(type: Test) {
+        useJUnitPlatform {
+            includeTags 'integrationTest'
+        }
+    }
+
+    check.dependsOn integrationTest
+    integrationTest.mustRunAfter test
+
     dependencies {
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${JUNIT_VERSION}"
         testImplementation "org.junit.jupiter:junit-jupiter-api:${JUNIT_VERSION}"
         testImplementation 'org.mockito:mockito-core:2.21.0'
         testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${JUNIT_VERSION}"
         testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.4.2'
     }
 }
