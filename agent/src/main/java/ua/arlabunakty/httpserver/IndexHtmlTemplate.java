@@ -79,11 +79,11 @@ class IndexHtmlTemplate {
         if (null == metricModel) {
             return NO_METRIC_DATA;
         }
-        return "<h3>" + metricModel.getCategory() +
-                ": min = " + metricModel.getMin() +
-                ", max = " + metricModel.getMax() +
-                ", avg = " + metricModel.getAvg() +
-                "</h3>";
+        return "<h3 id=\"" + metricModel.getCategory() + "\">" + metricModel.getCategory() +
+                ": min = <span class=\"min\">" + metricModel.getMin() +
+                "</span>, max = <span class=\"max\">" + metricModel.getMax() +
+                "</span>, avg = <span class=\"avg\">" + metricModel.getAvg() +
+                "</span></h3>";
     }
 
     private String prepareTableRows(Collection<HistoryDataModel> historyData) {
@@ -91,7 +91,8 @@ class IndexHtmlTemplate {
         for (HistoryDataModel model : historyData) {
             stringBuilder.append("<tr>")
                     .append("<td>").append(model.getCategory()).append("</td>")
-                    .append("<td>").append(model.getValue()).append("</td>")
+                    .append("<td class=\"").append(model.getCategory()).append("\">")
+                    .append(model.getValue()).append("</td>")
                     .append("</tr>");
         }
         return stringBuilder.toString();
