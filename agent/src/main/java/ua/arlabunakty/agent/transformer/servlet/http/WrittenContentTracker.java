@@ -16,11 +16,11 @@ public class WrittenContentTracker {
     }
 
     public void trackContentLength(byte[] content) {
-        addWrittenContent((content != null) ? content.length : 0);
+        addWrittenContent(content == null ? 0 : content.length);
     }
 
     public void trackContentLength(char... content) {
-        addWrittenContent((content != null) ? content.length : 0);
+        addWrittenContent(content == null ? 0 : content.length);
     }
 
     public void trackContentLength(int content) {

@@ -67,10 +67,24 @@ class WrittenContentTrackerTest {
     }
 
     @Test
+    void shouldTrackContentLengthForNullByteArray() {
+        tracker.trackContentLength((byte[]) null);
+
+        assertEquals(0, tracker.getContentLength());
+    }
+
+    @Test
     void shouldTrackContentLengthForCharVarArgs() {
         tracker.trackContentLength("test2222".toCharArray());
 
         assertEquals(8, tracker.getContentLength());
+    }
+
+    @Test
+    void shouldTrackContentLengthForNullCharVarArgs() {
+        tracker.trackContentLength((char[]) null);
+
+        assertEquals(0, tracker.getContentLength());
     }
 
     @Test
