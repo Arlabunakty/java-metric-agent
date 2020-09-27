@@ -16,7 +16,7 @@ import ua.arlabunakty.core.service.ServiceFactory;
 import ua.arlabunakty.core.service.StatsService;
 
 class IndexHttpHandler {
-    static final String SEARCH_ID_QUEARY_PARAMETER_NAME = "id";
+    static final String SEARCH_ID_QUERY_PARAMETER_NAME = "id";
 
     private final StatsService statsService;
     private final MetricService metricService;
@@ -35,7 +35,7 @@ class IndexHttpHandler {
     }
 
     HttpHandler indexHttpHandler() {
-        return (exchange) -> {
+        return exchange -> {
             Collection<HistoryDataModel> historyData = findHistoryDataByQueryParameter(exchange);
 
             exchange.setStatusCode(200);
@@ -57,8 +57,8 @@ class IndexHttpHandler {
 
     private Collection<HistoryDataModel> findHistoryDataByQueryParameter(HttpServerExchange exchange) {
         Map<String, Deque<String>> queryParameters = exchange.getQueryParameters();
-        if (queryParameters.containsKey(SEARCH_ID_QUEARY_PARAMETER_NAME)) {
-            String searchId = queryParameters.get(SEARCH_ID_QUEARY_PARAMETER_NAME).getFirst();
+        if (queryParameters.containsKey(SEARCH_ID_QUERY_PARAMETER_NAME)) {
+            String searchId = queryParameters.get(SEARCH_ID_QUERY_PARAMETER_NAME).getFirst();
             return statsService.findByTag(searchId);
         }
         return Collections.emptyList();

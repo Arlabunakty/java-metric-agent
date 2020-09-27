@@ -7,8 +7,12 @@ import java.util.logging.Logger;
 import ua.arlabunakty.agent.transformer.servlet.http.HttpServletTransformer;
 import ua.arlabunakty.httpserver.EmbeddedHttpServer;
 
-public class Agent {
+public final class Agent {
     private static final Logger LOGGER = Logger.getLogger(Agent.class.getName());
+
+    private Agent() {
+
+    }
 
     /**
      * This is called via the Java 1.5 Instrumentation startup sequence (JSR 163). Boot up the agent.
@@ -17,8 +21,6 @@ public class Agent {
         LOGGER.fine("[Agent] premain method");
 
         transformClass("javax.servlet.http.HttpServlet", instrumentation);
-
-        EmbeddedHttpServer.start();
     }
 
     private static void transformClass(String className, Instrumentation instrumentation) {
@@ -50,5 +52,6 @@ public class Agent {
         } catch (Exception ex) {
             throw new RuntimeException("Transform failed for class: [" + clazz.getName() + "]", ex);
         }
+        EmbeddedHttpServer.start();
     }
 }

@@ -27,20 +27,17 @@ class IndexHtmlTemplate {
             "                                    <div class=\"col-auto\">\n" +
             "                                        <i class=\"fas fa-search h4 text-body\"></i>\n" +
             "                                    </div>\n" +
-            "                                    <!--end of col-->\n" +
             "                                    <div class=\"col\">\n" +
             "                                        <input " +
             "       class=\"form-control form-control-lg form-control-borderless\" name=\"" +
-            IndexHttpHandler.SEARCH_ID_QUEARY_PARAMETER_NAME +
+            IndexHttpHandler.SEARCH_ID_QUERY_PARAMETER_NAME +
             "\" type=\"search\" placeholder=\"Search history data by Unique Identifier\">\n" +
             "                                    </div>\n" +
-            "                                    <!--end of col-->\n" +
             "                                    <div class=\"col-auto\">\n" +
             "                                        <button class=\"btn btn-lg btn-success\" type=\"submit\">" +
             "                                               Search" +
             "                                        </button>\n" +
             "                                    </div>\n" +
-            "                                    <!--end of col-->\n" +
             "                                </div>\n" +
             "                            </form>\n" +
             "                        </div>\n" +

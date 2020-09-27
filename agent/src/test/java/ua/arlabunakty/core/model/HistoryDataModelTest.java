@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class HistoryDataModelTest {
 
     @Test
-    public void equalsContract() {
+    void equalsContract() {
         new ConfiguredEqualsVerifier()
                 .suppress(Warning.NULL_FIELDS)
                 .forClass(HistoryDataModel.class)

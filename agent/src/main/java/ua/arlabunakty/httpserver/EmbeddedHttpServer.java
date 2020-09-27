@@ -5,7 +5,11 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.RoutingHandler;
 import io.undertow.util.Headers;
 
-public class EmbeddedHttpServer {
+public final class EmbeddedHttpServer {
+
+    private EmbeddedHttpServer() {
+
+    }
 
     /**
      * Starts embedded Http server on port {@code 8081}, which
