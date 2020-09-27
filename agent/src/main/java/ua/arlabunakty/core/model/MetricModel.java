@@ -2,12 +2,23 @@ package ua.arlabunakty.core.model;
 
 import java.util.Objects;
 
+/**
+ * This class is thread-safe.
+ */
 public final class MetricModel {
     private final String category;
     private final double min;
     private final double max;
     private final double avg;
 
+    /**
+     * Constructs and initializes an aggregated metric data.
+     *
+     * @param category - the category of the aggregated data.
+     * @param min - the minimum value of the aggregated data.
+     * @param max - the maximum value of the aggregated data.
+     * @param avg - the average value of the aggregated data.
+     */
     public MetricModel(String category, double min, double max, double avg) {
         this.category = category;
         this.min = min;

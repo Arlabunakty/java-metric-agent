@@ -2,13 +2,26 @@ package ua.arlabunakty.agent.transformer.servlet.http;
 
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ContentLengthTrackingPrintWriter extends PrintWriter {
     private final PrintWriter delegate;
     private final WrittenContentTracker tracker;
 
+    /**
+     * Constructs a decorator {@code PrintWriter} around another {@code PrintWriter}
+     * to track written content via print/write methods.
+     *
+     * @param delegate - the underlying {@code PrintWriter}.
+     * @param tracker - who records passing content.
+     * @throws NullPointerException  if the delegate or tracker is null.
+     */
     public ContentLengthTrackingPrintWriter(PrintWriter delegate, WrittenContentTracker tracker) {
         super(delegate);
+
+        Objects.requireNonNull(delegate, "delegate should be non null");
+        Objects.requireNonNull(tracker, "tracker should be non null");
+
         this.delegate = delegate;
         this.tracker = tracker;
     }

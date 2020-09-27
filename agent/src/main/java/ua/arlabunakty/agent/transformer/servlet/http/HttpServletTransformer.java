@@ -52,7 +52,7 @@ public class HttpServletTransformer implements ClassFileTransformer {
             CtMethod method = clazz.getDeclaredMethod(TRANSFORMED_METHOD_NAME);
 
             method.addLocalVariable("metricTimer", timerClazz);
-            method.insertAfter("metricTimer.stopAndRecord();", true);
+            method.insertAfter("metricTimer.recordTimeInterval();", true);
             clazz.getClassFile()
                     .setMajorVersion(ClassFile.JAVA_7);
 

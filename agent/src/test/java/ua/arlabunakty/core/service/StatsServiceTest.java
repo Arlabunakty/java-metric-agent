@@ -129,7 +129,7 @@ class StatsServiceTest {
         TimerModel timerModel = statsService.registerTimer(TestCategoryConstant.CATEGORY, TestTagConstant.TAG);
         ArgumentCaptor<HistoryDataModel> captor = ArgumentCaptor.forClass(HistoryDataModel.class);
 
-        timerModel.stopAndRecord();
+        timerModel.recordTimeInterval();
         verify(historyDataDao, times(1))
                 .append(captor.capture());
         HistoryDataModel model = captor.getValue();
