@@ -42,6 +42,14 @@ class StatsServiceTest {
     }
 
     @Test
+    void shouldThrowNullPointerExceptionWhenConstructorWithNull() {
+        NullPointerException exception =
+                assertThrows(NullPointerException.class, () -> new StatsService(null));
+
+        assertEquals("historyDataDao should be non null", exception.getMessage());
+    }
+
+    @Test
     void shouldAppendHistoryDataWhenRecordValueWithSingleTag() {
         statsService.recordValue(10L, TestCategoryConstant.CATEGORY, TestTagConstant.TAG);
 
