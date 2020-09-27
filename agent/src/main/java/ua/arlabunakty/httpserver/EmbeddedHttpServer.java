@@ -7,6 +7,10 @@ import io.undertow.util.Headers;
 
 public class EmbeddedHttpServer {
 
+    /**
+     * Starts embedded Http server on port {@code 8081}, which
+     * displays metrics and history data by Trace Id.
+     */
     public static void start() {
         Undertow.builder()
                 .addHttpListener(8081, "localhost")

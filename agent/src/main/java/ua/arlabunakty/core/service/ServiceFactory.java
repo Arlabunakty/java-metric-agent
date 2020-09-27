@@ -1,19 +1,27 @@
 package ua.arlabunakty.core.service;
 
+import java.util.Objects;
 import ua.arlabunakty.core.dao.HistoryDataDao;
 
+/**
+ * Class which provides access to initialized Metric Core services:
+ * - {@link StatsService};
+ * - {@link MetricService}.
+ */
 public class ServiceFactory {
-
     private final StatsService statsService;
     private final MetricService metricService;
 
-    public ServiceFactory(StatsService statsService, MetricService metricService) {
+    ServiceFactory(StatsService statsService, MetricService metricService) {
+        Objects.requireNonNull(statsService, "statsService should be non null");
+        Objects.requireNonNull(metricService, "metricService should be non null");
+
         this.statsService = statsService;
         this.metricService = metricService;
     }
 
     public static ServiceFactory getInstance() {
-        return ServiceFactoryHolder.serviceFactory;
+        return ServiceFactoryHolder.SERVICE_FACTORY;
     }
 
     public StatsService getStatsService() {
@@ -26,7 +34,7 @@ public class ServiceFactory {
 
     private static final class ServiceFactoryHolder {
 
-        private static final ServiceFactory serviceFactory;
+        private static final ServiceFactory SERVICE_FACTORY;
 
         static {
             HistoryDataDao historyDataDao = new HistoryDataDao();
@@ -34,7 +42,7 @@ public class ServiceFactory {
 
             MetricService metricService = new MetricService(historyDataDao);
 
-            serviceFactory = new ServiceFactory(statsService, metricService);
+            SERVICE_FACTORY = new ServiceFactory(statsService, metricService);
         }
 
     }

@@ -74,27 +74,6 @@ class StatsServiceTest {
     }
 
     @Test
-    void shouldReturnCategoryHistoryDataWhenFindByCategory() {
-        Set<HistoryDataModel> categoryHistoryData = Collections.singleton(
-                new HistoryDataModel(10.0, TestCategoryConstant.CATEGORY, TestTagConstant.TAG));
-        Mockito.lenient()
-                .when(historyDataDao.findByCategory(TestCategoryConstant.CATEGORY))
-                .thenReturn(categoryHistoryData);
-
-        Collection<HistoryDataModel> historyDataByCategory = statsService.findByCategory(TestCategoryConstant.CATEGORY);
-
-        assertIterableEquals(categoryHistoryData, historyDataByCategory);
-    }
-
-    @Test
-    void shouldThrowNullPointerExceptionWhenFindByNullCategory() {
-        NullPointerException exception =
-                assertThrows(NullPointerException.class, () -> statsService.findByCategory(null));
-
-        assertEquals("category should be non null", exception.getMessage());
-    }
-
-    @Test
     void shouldReturnTagHistoryDataWhenFindByTag() {
         List<HistoryDataModel> tagHistoryData = Arrays.asList(
                 new HistoryDataModel(10.0, TestCategoryConstant.CATEGORY, TestTagConstant.TAG),

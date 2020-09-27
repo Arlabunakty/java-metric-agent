@@ -7,13 +7,22 @@ import ua.arlabunakty.core.model.HistoryDataModel;
 import ua.arlabunakty.core.model.MetricModel;
 
 public class MetricService {
-
     private final HistoryDataDao historyDataDao;
 
     public MetricService(HistoryDataDao historyDataDao) {
+        Objects.requireNonNull(historyDataDao, "historyDataDao should be non null");
         this.historyDataDao = historyDataDao;
     }
 
+    /**
+     * Select history data and builds metric model based on aggregated values:
+     * - minimum value;
+     * - maximum value;
+     * - average value.
+     *
+     * @param category - category to select history data.
+     * @return aggregated metric model or null if no history data exists.
+     */
     public MetricModel getMetricByCategory(String category) {
         Objects.requireNonNull(category, "category should be non null");
 

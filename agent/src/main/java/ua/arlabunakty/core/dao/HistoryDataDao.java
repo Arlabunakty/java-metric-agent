@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import ua.arlabunakty.core.model.HistoryDataModel;
 
 public class HistoryDataDao {
-
     private final Collection<HistoryDataModel> collection = new ConcurrentLinkedQueue<>();
 
     /**
@@ -19,7 +18,7 @@ public class HistoryDataDao {
     }
 
     /**
-     * Determines all history data with tag.
+     * Select all history data with given tag.
      *
      * @param tag - tag.
      * @return the collection of history data for the given tag.
@@ -31,7 +30,7 @@ public class HistoryDataDao {
     }
 
     /**
-     * Determines all history data with category.
+     * Selects all history data with given category.
      *
      * @param category - category.
      * @return the collection of history data for the given category.

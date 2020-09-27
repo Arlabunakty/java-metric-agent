@@ -65,7 +65,7 @@ class IndexHtmlTemplate {
                     "</html>";
     private static final String NO_METRIC_DATA = "";
 
-    public String apply(Collection<HistoryDataModel> historyData, MetricModel requestOperationTime,
+    String apply(Collection<HistoryDataModel> historyData, MetricModel requestOperationTime,
                         MetricModel responseBodyLength) {
         return HTML_TEMPLATE_START +
                 formatMetric(requestOperationTime) +
@@ -87,7 +87,7 @@ class IndexHtmlTemplate {
     }
 
     private String prepareTableRows(Collection<HistoryDataModel> historyData) {
-        final StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (HistoryDataModel model : historyData) {
             stringBuilder.append("<tr>")
                     .append("<td>").append(model.getCategory()).append("</td>")

@@ -7,14 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 public class ContentLengthTrackingResponseWrapper extends HttpServletResponseWrapper {
-
     private final WrittenContentTracker tracker = new WrittenContentTracker();
 
     /**
      * Constructs a response adaptor wrapping the given response.
      *
      * @param response the {@link HttpServletResponse} to be wrapped.
-     * @throws IllegalArgumentException if the response is null
      */
     public ContentLengthTrackingResponseWrapper(HttpServletResponse response) {
         super(response);
@@ -30,6 +28,12 @@ public class ContentLengthTrackingResponseWrapper extends HttpServletResponseWra
         return new ContentLengthTrackingServletOutputStream(super.getOutputStream(), tracker);
     }
 
+    /**
+     * Returns number of bytes which was passed to {@link PrintWriter} and {@link ServletOutputStream}
+     * on the moment of call.
+     *
+     * @return number of bytes to be returned with HttpResponse.
+     */
     public long getContentLength() {
         return tracker.getContentLength();
     }

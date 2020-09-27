@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.Map;
+import java.util.Objects;
 import ua.arlabunakty.core.model.HistoryDataModel;
 import ua.arlabunakty.core.model.MetricModel;
 import ua.arlabunakty.core.model.WebCategoryEnum;
@@ -14,23 +15,26 @@ import ua.arlabunakty.core.service.MetricService;
 import ua.arlabunakty.core.service.ServiceFactory;
 import ua.arlabunakty.core.service.StatsService;
 
-public class IndexHttpHandler {
+class IndexHttpHandler {
     static final String SEARCH_ID_QUEARY_PARAMETER_NAME = "id";
 
     private final StatsService statsService;
     private final MetricService metricService;
     private final IndexHtmlTemplate indexHtmlTemplate = new IndexHtmlTemplate();
 
-    public IndexHttpHandler(StatsService statsService, MetricService metricService) {
+    IndexHttpHandler(StatsService statsService, MetricService metricService) {
+        Objects.requireNonNull(statsService, "statsService should be non null");
+        Objects.requireNonNull(metricService, "metricService should be non null");
+
         this.statsService = statsService;
         this.metricService = metricService;
     }
 
-    public static IndexHttpHandler getInstance() {
+    static IndexHttpHandler getInstance() {
         return IndexHttpHandlerHolder.INDEX_HTTP_HANDLER;
     }
 
-    public HttpHandler indexHttpHandler() {
+    HttpHandler indexHttpHandler() {
         return (exchange) -> {
             Collection<HistoryDataModel> historyData = findHistoryDataByQueryParameter(exchange);
 
@@ -51,7 +55,7 @@ public class IndexHttpHandler {
         return indexHtmlTemplate.apply(historyData, requestOperationTime, responseBodyLength);
     }
 
-    public Collection<HistoryDataModel> findHistoryDataByQueryParameter(HttpServerExchange exchange) {
+    private Collection<HistoryDataModel> findHistoryDataByQueryParameter(HttpServerExchange exchange) {
         Map<String, Deque<String>> queryParameters = exchange.getQueryParameters();
         if (queryParameters.containsKey(SEARCH_ID_QUEARY_PARAMETER_NAME)) {
             String searchId = queryParameters.get(SEARCH_ID_QUEARY_PARAMETER_NAME).getFirst();

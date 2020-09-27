@@ -30,6 +30,14 @@ class MetricServiceTest {
     }
 
     @Test
+    void shouldThrowNullPointerExceptionWhenConstructing() {
+        NullPointerException exception =
+                assertThrows(NullPointerException.class, () -> new MetricService(null));
+
+        assertEquals("historyDataDao should be non null", exception.getMessage());
+    }
+
+    @Test
     void shouldReturnAggregatedMetricWhenGetMetricByCategory() {
         Mockito.when(historyDataDao.findByCategory(TestCategoryConstant.CATEGORY))
                 .thenReturn(Arrays.asList(
