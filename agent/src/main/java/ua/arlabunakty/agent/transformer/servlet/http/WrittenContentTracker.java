@@ -27,6 +27,10 @@ public class WrittenContentTracker {
         trackContentLength(String.valueOf(content));
     }
 
+    public void trackContentLength(long content) {
+        trackContentLength(String.valueOf(content));
+    }
+
     public void trackContentLength(float content) {
         trackContentLength(String.valueOf(content));
     }

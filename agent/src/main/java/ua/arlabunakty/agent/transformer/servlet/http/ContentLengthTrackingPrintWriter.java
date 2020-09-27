@@ -58,7 +58,7 @@ public class ContentLengthTrackingPrintWriter extends PrintWriter {
 
     @Override
     public void write(int c) {
-        tracker.trackContentLength(c);
+        tracker.addWrittenContent(1);
         this.delegate.write(c);
     }
 
