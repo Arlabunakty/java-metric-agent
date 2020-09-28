@@ -21,7 +21,7 @@ class ContentLengthTrackingServletOutputStreamTest {
     private WrittenContentTracker tracker;
 
     @BeforeEach
-    void init () {
+    void init() {
         outputStream = new ContentLengthTrackingServletOutputStream(target, tracker);
     }
 

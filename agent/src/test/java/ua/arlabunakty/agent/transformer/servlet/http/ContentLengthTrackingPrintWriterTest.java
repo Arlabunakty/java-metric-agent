@@ -21,7 +21,7 @@ class ContentLengthTrackingPrintWriterTest {
     private WrittenContentTracker tracker;
 
     @BeforeEach
-    void init () {
+    void init() {
         writer = new ContentLengthTrackingPrintWriter(target, tracker);
     }
 
