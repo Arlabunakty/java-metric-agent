@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 public class ContentLengthTrackingResponseWrapper extends HttpServletResponseWrapper {
-    private final WrittenContentTracker tracker = new WrittenContentTracker();
+    private final WrittenContentTracker tracker;
 
     /**
      * Constructs a response adaptor wrapping the given response.
@@ -15,7 +15,12 @@ public class ContentLengthTrackingResponseWrapper extends HttpServletResponseWra
      * @param response the {@link HttpServletResponse} to be wrapped.
      */
     public ContentLengthTrackingResponseWrapper(HttpServletResponse response) {
+        this(response, new WrittenContentTracker());
+    }
+
+    ContentLengthTrackingResponseWrapper(HttpServletResponse response, WrittenContentTracker tracker) {
         super(response);
+        this.tracker = tracker;
     }
 
     @Override

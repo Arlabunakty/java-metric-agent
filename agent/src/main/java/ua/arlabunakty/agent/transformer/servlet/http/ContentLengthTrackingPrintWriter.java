@@ -26,6 +26,10 @@ public class ContentLengthTrackingPrintWriter extends PrintWriter {
         this.tracker = tracker;
     }
 
+    public WrittenContentTracker getTracker() {
+        return tracker;
+    }
+
     @Override
     public void flush() {
         this.delegate.flush();

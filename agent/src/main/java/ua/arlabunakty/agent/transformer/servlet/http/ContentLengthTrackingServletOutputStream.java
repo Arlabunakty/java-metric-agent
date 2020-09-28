@@ -13,6 +13,11 @@ public class ContentLengthTrackingServletOutputStream extends ServletOutputStrea
         this.tracker = tracker;
     }
 
+
+    public WrittenContentTracker getTracker() {
+        return tracker;
+    }
+
     @Override
     public void print(String s) throws IOException {
         tracker.trackContentLength(s);
