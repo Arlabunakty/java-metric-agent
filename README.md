@@ -56,7 +56,7 @@ Each response has header 'X-Metric-Trace-Id' with UUID to fetch request/response
 - `requestOperationTime` is Request Time Metric to measure time spent between when the application starts to process the request, and the time when the application sends the response to the client;
 - `responseBodyLength` is Response Size Metric to measure the size of the HTTP response body in bytes.
 
-Future features:
+## Future features:
 - support Java 8+ runtimes;
 - make configurable agent initialization. I.e. embedded server port, etc;
 - provide the agent api jar to record custom metrics in user application;
