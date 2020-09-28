@@ -41,7 +41,7 @@ class ContentLengthTrackingResponseWrapperTest {
         responseWriter.print(false);
         responseWriter.print('A');
         responseWriter.print(Long.MAX_VALUE);
-        responseWriter.print(0.001);
+        responseWriter.print(0.001f);
         responseWriter.print("testString".toCharArray());
         responseWriter.print(0.12345d);
         responseWriter.print("string");
@@ -68,7 +68,7 @@ class ContentLengthTrackingResponseWrapperTest {
         responseWriter.println(false);
         responseWriter.println('A');
         responseWriter.println(Long.MAX_VALUE);
-        responseWriter.println(0.001);
+        responseWriter.println(0.001f);
         responseWriter.println("testString".toCharArray());
         responseWriter.println(0.12345d);
         responseWriter.println("string");
