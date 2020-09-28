@@ -1,6 +1,5 @@
 package ua.arlabunakty.agent.transformer.servlet.http;
 
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.arlabunakty.test.TestObject;
 
 @ExtendWith(MockitoExtension.class)
 class ContentLengthTrackingServletOutputStreamTest {
@@ -103,6 +101,9 @@ class ContentLengthTrackingServletOutputStreamTest {
 
         outputStream.isReady();
         verify(target).isReady();
+
+        outputStream.setWriteListener(null);
+        verify(target).setWriteListener(null);
     }
 
     @Test

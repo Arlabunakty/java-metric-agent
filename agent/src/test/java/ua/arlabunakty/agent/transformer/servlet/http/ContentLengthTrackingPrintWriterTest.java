@@ -138,7 +138,6 @@ class ContentLengthTrackingPrintWriterTest {
 
         writer.flush();
         verify(target).flush();
-
     }
 
     @Test
