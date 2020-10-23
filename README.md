@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/Arlabunakty/java-metric-agent.svg?branch=master)](https://travis-ci.com/Arlabunakty/java-metric-agent)
 ![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)
+[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/Arlabunakty/java-metric-agent.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Arlabunakty/java-metric-agent/context:java)
 
 **The java metric agent** is a metric-gathering extension for a web application. It gathers metrics about requests and responses served by the application.
 
