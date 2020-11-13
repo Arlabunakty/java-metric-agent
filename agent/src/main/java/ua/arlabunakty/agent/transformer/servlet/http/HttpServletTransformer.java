@@ -11,7 +11,7 @@ import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.NotFoundException;
 import javassist.bytecode.ClassFile;
-import ua.arlabunakty.core.model.WebCategoryEnum;
+import ua.arlabunakty.core.domain.WebCategoryEnum;
 
 public class HttpServletTransformer implements ClassFileTransformer {
 
@@ -42,7 +42,7 @@ public class HttpServletTransformer implements ClassFileTransformer {
         LOGGER.log(Level.INFO, "[Agent] Transforming class {0}", targetClassName);
         try {
             ClassPool classPool = ClassPool.getDefault();
-            CtClass timerClazz = classPool.get("ua.arlabunakty.core.model.TimerModel");
+            CtClass timerClazz = classPool.get("ua.arlabunakty.core.domain.Timer");
             CtClass clazz = classPool.get(targetClassName);
 
             // https://issues.redhat.com/browse/JASSIST-232?focusedCommentId=12993855&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-12993855

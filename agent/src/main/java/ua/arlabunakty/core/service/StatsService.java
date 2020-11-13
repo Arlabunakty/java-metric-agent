@@ -2,23 +2,23 @@ package ua.arlabunakty.core.service;
 
 import java.util.Collection;
 import java.util.Objects;
-import ua.arlabunakty.core.dao.HistoryDataDao;
-import ua.arlabunakty.core.model.Clock;
-import ua.arlabunakty.core.model.HistoryDataModel;
-import ua.arlabunakty.core.model.TimerModel;
+import ua.arlabunakty.core.dao.HistoryDao;
+import ua.arlabunakty.core.domain.Clock;
+import ua.arlabunakty.core.domain.HistoryRecord;
+import ua.arlabunakty.core.domain.Timer;
 
 public class StatsService {
-    private final HistoryDataDao historyDataDao;
+    private final HistoryDao historyDao;
 
     /**
      * Constructs and initialize service to operate with history data source.
      *
-     * @param historyDataDao - data source gor history data.
+     * @param historyDao - data source gor history data.
      * @throws NullPointerException if category is {@code null}.
      */
-    public StatsService(HistoryDataDao historyDataDao) {
-        Objects.requireNonNull(historyDataDao, "historyDataDao should be non null");
-        this.historyDataDao = historyDataDao;
+    public StatsService(HistoryDao historyDao) {
+        Objects.requireNonNull(historyDao, "historyDataDao should be non null");
+        this.historyDao = historyDao;
     }
 
     /**
@@ -32,8 +32,8 @@ public class StatsService {
     public void recordValue(long value, String category, String... tags) {
         Objects.requireNonNull(category, "category should be non null");
 
-        HistoryDataModel historyDataModel = new HistoryDataModel(value, category, tags);
-        historyDataDao.append(historyDataModel);
+        HistoryRecord historyRecord = new HistoryRecord(value, category, tags);
+        historyDao.append(historyRecord);
     }
 
     /**
@@ -44,10 +44,10 @@ public class StatsService {
      * @return timer.
      * @throws NullPointerException if category is {@code null}.
      */
-    public TimerModel registerTimer(String category, String... tags) {
+    public Timer registerTimer(String category, String... tags) {
         Objects.requireNonNull(category, "category should be non null");
 
-        return new TimerModel(new Clock(), this::recordValue, category, tags);
+        return new Timer(new Clock(), this::recordValue, category, tags);
     }
 
     /**
@@ -57,10 +57,15 @@ public class StatsService {
      * @return colelction of history data.
      * @throws NullPointerException if tag is {@code null}.
      */
-    public Collection<HistoryDataModel> findByTag(String tag) {
+    public Collection<HistoryRecord> findByTag(String tag) {
         Objects.requireNonNull(tag, "tag should be non null");
 
-        return historyDataDao.findByTag(tag);
+        return historyDao.findByTag(tag);
     }
 
+    public Collection<HistoryRecord> findByCategory(String category) {
+        Objects.requireNonNull(category, "category should be non null");
+
+        return historyDao.findByCategory(category);
+    }
 }

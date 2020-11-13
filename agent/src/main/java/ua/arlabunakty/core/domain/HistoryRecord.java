@@ -1,4 +1,4 @@
-package ua.arlabunakty.core.model;
+package ua.arlabunakty.core.domain;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * This class is thread-safe.
  */
-public final class HistoryDataModel {
+public final class HistoryRecord {
     private final double value;
     private final String category;
     private final String[] tags;
@@ -19,7 +19,7 @@ public final class HistoryDataModel {
      * @param category - the category of the newly constructed {@code HistoryDataModel}.
      * @param tags - tags of the newly constructed {@code HistoryDataModel}.
      */
-    public HistoryDataModel(double value, String category, String... tags) {
+    public HistoryRecord(double value, String category, String... tags) {
         this.value = value;
         this.category = category;
         this.tags =  Arrays.copyOf(tags, tags.length);
@@ -61,7 +61,7 @@ public final class HistoryDataModel {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        HistoryDataModel model = (HistoryDataModel) o;
+        HistoryRecord model = (HistoryRecord) o;
         return Double.compare(model.getValue(), getValue()) == 0 &&
                 getCategory().equals(model.getCategory()) &&
                 Arrays.equals(tags, model.tags);

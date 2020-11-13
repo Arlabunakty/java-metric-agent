@@ -1,4 +1,4 @@
-package ua.arlabunakty.core.model;
+package ua.arlabunakty.core.domain;
 
 public enum WebCategoryEnum {
     REQUEST_OPERATION_TIME("requestOperationTime"),

@@ -27,7 +27,7 @@ public final class Agent {
         // see if we can get the class using forName
         try {
             Class<?> targetCls = Class.forName(className);
-            transform(targetCls, instrumentation);
+            transformAndStartWebServer(targetCls, instrumentation);
             return;
         } catch (Exception ex) {
             LOGGER.log(Level.FINE, "Class [{}] not found with Class.forName", className);
@@ -36,21 +36,21 @@ public final class Agent {
         // otherwise iterate all loaded classes and find what we want
         for (Class<?> clazz : instrumentation.getAllLoadedClasses()) {
             if (clazz.getName().equals(className)) {
-                transform(clazz, instrumentation);
+                transformAndStartWebServer(clazz, instrumentation);
                 return;
             }
         }
-        throw new RuntimeException("Failed to find class [" + className + "]");
+        throw new IllegalStateException("Failed to find class [" + className + "]");
     }
 
-    private static void transform(Class<?> clazz, Instrumentation instrumentation) {
+    private static void transformAndStartWebServer(Class<?> clazz, Instrumentation instrumentation) {
         ClassFileTransformer cft = new HttpServletTransformer(clazz);
         instrumentation.addTransformer(cft, true);
         try {
             instrumentation.retransformClasses(clazz);
             LOGGER.log(Level.FINE, "Class [{}] has been re-transformed", clazz);
         } catch (Exception ex) {
-            throw new RuntimeException("Transform failed for class: [" + clazz.getName() + "]", ex);
+            throw new IllegalStateException("Transform failed for class: [" + clazz.getName() + "]", ex);
         }
         EmbeddedHttpServer.start();
     }

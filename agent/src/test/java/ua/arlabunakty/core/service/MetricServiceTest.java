@@ -12,9 +12,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.arlabunakty.core.dao.HistoryDataDao;
-import ua.arlabunakty.core.model.HistoryDataModel;
-import ua.arlabunakty.core.model.MetricModel;
+import ua.arlabunakty.core.dao.HistoryDao;
+import ua.arlabunakty.core.domain.HistoryRecord;
+import ua.arlabunakty.core.domain.Metric;
 import ua.arlabunakty.test.TestCategoryConstant;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,11 +22,11 @@ class MetricServiceTest {
 
     private MetricService metricService;
     @Mock
-    private HistoryDataDao historyDataDao;
+    private StatsService statsService;
 
     @BeforeEach
     void init() {
-        metricService = new MetricService(historyDataDao);
+        metricService = new MetricService(statsService);
     }
 
     @Test
@@ -34,30 +34,30 @@ class MetricServiceTest {
         NullPointerException exception =
                 assertThrows(NullPointerException.class, () -> new MetricService(null));
 
-        assertEquals("historyDataDao should be non null", exception.getMessage());
+        assertEquals("statsService should be non null", exception.getMessage());
     }
 
     @Test
     void shouldReturnAggregatedMetricWhenGetMetricByCategory() {
-        Mockito.when(historyDataDao.findByCategory(TestCategoryConstant.CATEGORY))
+        Mockito.when(statsService.findByCategory(TestCategoryConstant.CATEGORY))
                 .thenReturn(Arrays.asList(
-                        new HistoryDataModel(10, TestCategoryConstant.CATEGORY),
-                        new HistoryDataModel(20, TestCategoryConstant.CATEGORY),
-                        new HistoryDataModel(30, TestCategoryConstant.CATEGORY)));
+                        new HistoryRecord(10, TestCategoryConstant.CATEGORY),
+                        new HistoryRecord(20, TestCategoryConstant.CATEGORY),
+                        new HistoryRecord(30, TestCategoryConstant.CATEGORY)));
 
-        MetricModel category = metricService.getMetricByCategory(TestCategoryConstant.CATEGORY);
+        Metric category = metricService.getMetricByCategory(TestCategoryConstant.CATEGORY);
 
-        assertEquals(category, new MetricModel(TestCategoryConstant.CATEGORY, 10.0, 30.0, 20.0));
+        assertEquals(category, new Metric(TestCategoryConstant.CATEGORY, 10.0, 30.0, 20.0));
     }
 
     @Test
     void shouldReturnNullWhenGetMetricByMissingCategory() {
-        Mockito.when(historyDataDao.findByCategory(TestCategoryConstant.CATEGORY))
+        Mockito.when(statsService.findByCategory(TestCategoryConstant.CATEGORY))
                 .thenReturn(Collections.emptyList());
 
-        MetricModel metricModel = metricService.getMetricByCategory(TestCategoryConstant.CATEGORY);
+        Metric metric = metricService.getMetricByCategory(TestCategoryConstant.CATEGORY);
 
-        assertNull(metricModel, "metricModel should be null for missing category");
+        assertNull(metric, "metricModel should be null for missing category");
     }
 
     @Test

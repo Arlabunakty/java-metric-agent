@@ -1,8 +1,8 @@
 package ua.arlabunakty.httpserver;
 
 import java.util.Collection;
-import ua.arlabunakty.core.model.HistoryDataModel;
-import ua.arlabunakty.core.model.MetricModel;
+import ua.arlabunakty.core.domain.HistoryRecord;
+import ua.arlabunakty.core.domain.Metric;
 
 class IndexHtmlTemplate {
     private static final String HTML_TEMPLATE_START = "<!DOCTYPE html>\n" +
@@ -62,30 +62,30 @@ class IndexHtmlTemplate {
                     "</html>";
     private static final String NO_METRIC_DATA = "";
 
-    String apply(Collection<HistoryDataModel> historyData, MetricModel requestOperationTime,
-                        MetricModel responseBodyLength) {
+    String apply(Collection<HistoryRecord> historyRecordData, Metric requestOperationTime,
+                 Metric responseBodyLength) {
         return HTML_TEMPLATE_START +
                 formatMetric(requestOperationTime) +
                 formatMetric(responseBodyLength) +
                 HTML_TEMPLATE_SEARCH_LIST_TABLE +
-                prepareTableRows(historyData) +
+                prepareTableRows(historyRecordData) +
                 HTML_TEMPLATE_END;
     }
 
-    private String formatMetric(MetricModel metricModel) {
-        if (null == metricModel) {
+    private String formatMetric(Metric metric) {
+        if (null == metric) {
             return NO_METRIC_DATA;
         }
-        return "<h3 id=\"" + metricModel.getCategory() + "\">" + metricModel.getCategory() +
-                ": min = <span class=\"min\">" + metricModel.getMin() +
-                "</span>, max = <span class=\"max\">" + metricModel.getMax() +
-                "</span>, avg = <span class=\"avg\">" + metricModel.getAvg() +
+        return "<h3 id=\"" + metric.getCategory() + "\">" + metric.getCategory() +
+                ": min = <span class=\"min\">" + metric.getMin() +
+                "</span>, max = <span class=\"max\">" + metric.getMax() +
+                "</span>, avg = <span class=\"avg\">" + metric.getAvg() +
                 "</span></h3>";
     }
 
-    private String prepareTableRows(Collection<HistoryDataModel> historyData) {
+    private String prepareTableRows(Collection<HistoryRecord> historyRecordData) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (HistoryDataModel model : historyData) {
+        for (HistoryRecord model : historyRecordData) {
             stringBuilder.append("<tr>")
                     .append("<td>").append(model.getCategory()).append("</td>")
                     .append("<td class=\"").append(model.getCategory()).append("\">")

@@ -1,11 +1,11 @@
-package ua.arlabunakty.core.model;
+package ua.arlabunakty.core.domain;
 
 import java.util.Objects;
 
 /**
  * This class is thread-safe.
  */
-public final class MetricModel {
+public final class Metric {
     private final String category;
     private final double min;
     private final double max;
@@ -19,7 +19,7 @@ public final class MetricModel {
      * @param max - the maximum value of the aggregated data.
      * @param avg - the average value of the aggregated data.
      */
-    public MetricModel(String category, double min, double max, double avg) {
+    public Metric(String category, double min, double max, double avg) {
         this.category = category;
         this.min = min;
         this.max = max;
@@ -50,7 +50,7 @@ public final class MetricModel {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MetricModel that = (MetricModel) o;
+        Metric that = (Metric) o;
         return Double.compare(that.getMin(), getMin()) == 0 &&
                 Double.compare(that.getMax(), getMax()) == 0 &&
                 Double.compare(that.getAvg(), getAvg()) == 0 &&

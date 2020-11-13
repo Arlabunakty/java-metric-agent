@@ -3,18 +3,18 @@ package ua.arlabunakty.core.dao;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
-import ua.arlabunakty.core.model.HistoryDataModel;
+import ua.arlabunakty.core.domain.HistoryRecord;
 
-public class HistoryDataDao {
-    private final Collection<HistoryDataModel> collection = new ConcurrentLinkedQueue<>();
+public class HistoryDao {
+    private final Collection<HistoryRecord> collection = new ConcurrentLinkedQueue<>();
 
     /**
      * Appends the specified history data to the Data Store.
      *
-     * @param historyDataModel history data model.
+     * @param historyRecord history data model.
      */
-    public void append(HistoryDataModel historyDataModel) {
-        collection.add(historyDataModel);
+    public void append(HistoryRecord historyRecord) {
+        collection.add(historyRecord);
     }
 
     /**
@@ -23,7 +23,7 @@ public class HistoryDataDao {
      * @param tag - tag.
      * @return the collection of history data for the given tag.
      */
-    public Collection<HistoryDataModel> findByTag(String tag) {
+    public Collection<HistoryRecord> findByTag(String tag) {
         return collection.stream()
                 .filter(element -> element.containTag(tag))
                 .collect(Collectors.toList());
@@ -35,7 +35,7 @@ public class HistoryDataDao {
      * @param category - category.
      * @return the collection of history data for the given category.
      */
-    public Collection<HistoryDataModel> findByCategory(String category) {
+    public Collection<HistoryRecord> findByCategory(String category) {
         return collection.stream()
                 .filter(element -> element.getCategory().equals(category))
                 .collect(Collectors.toList());

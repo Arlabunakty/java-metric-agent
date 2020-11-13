@@ -4,6 +4,7 @@ import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.RoutingHandler;
 import io.undertow.util.Headers;
+import ua.arlabunakty.core.service.ServiceFactory;
 
 public final class EmbeddedHttpServer {
 
@@ -12,12 +13,16 @@ public final class EmbeddedHttpServer {
     }
 
     /**
-     * Starts embedded Http server on port {@code 8081}, which
-     * displays metrics and history data by Trace Id.
+     * Starts embedded Http server on port defined in {@link ua.arlabunakty.core.service.ConfigurationService},
+     * which displays metrics and history data by Trace Id.
      */
     public static void start() {
+        final int embeddedHttpServerPort = ServiceFactory.getInstance()
+                .getConfigurationService()
+                .getEmbeddedHttpServerPort();
+
         Undertow.builder()
-                .addHttpListener(8081, "localhost")
+                .addHttpListener(embeddedHttpServerPort, "localhost")
                 .setHandler(
                         new RoutingHandler()
                                 .get("/", IndexHttpHandler.getInstance()

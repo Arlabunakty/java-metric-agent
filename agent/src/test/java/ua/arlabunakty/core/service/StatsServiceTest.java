@@ -13,9 +13,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,9 +21,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ua.arlabunakty.core.dao.HistoryDataDao;
-import ua.arlabunakty.core.model.HistoryDataModel;
-import ua.arlabunakty.core.model.TimerModel;
+import ua.arlabunakty.core.dao.HistoryDao;
+import ua.arlabunakty.core.domain.HistoryRecord;
+import ua.arlabunakty.core.domain.Timer;
 import ua.arlabunakty.test.TestCategoryConstant;
 import ua.arlabunakty.test.TestTagConstant;
 
@@ -34,11 +32,11 @@ class StatsServiceTest {
 
     private StatsService statsService;
     @Mock
-    private HistoryDataDao historyDataDao;
+    private HistoryDao historyDao;
 
     @BeforeEach
     void init() {
-        statsService = new StatsService(historyDataDao);
+        statsService = new StatsService(historyDao);
     }
 
     @Test
@@ -53,24 +51,24 @@ class StatsServiceTest {
     void shouldAppendHistoryDataWhenRecordValueWithSingleTag() {
         statsService.recordValue(10L, TestCategoryConstant.CATEGORY, TestTagConstant.TAG);
 
-        verify(historyDataDao)
-                .append(eq(new HistoryDataModel(10.0, TestCategoryConstant.CATEGORY, TestTagConstant.TAG)));
+        verify(historyDao)
+                .append(eq(new HistoryRecord(10.0, TestCategoryConstant.CATEGORY, TestTagConstant.TAG)));
     }
 
     @Test
     void shouldAppendHistoryDataWhenRecordValueWithMultipleTags() {
         statsService.recordValue(11L, TestCategoryConstant.ANOTHER_CATEGORY, "tag1", "tag2");
 
-        verify(historyDataDao)
-                .append(eq(new HistoryDataModel(11.0, TestCategoryConstant.ANOTHER_CATEGORY, "tag1", "tag2")));
+        verify(historyDao)
+                .append(eq(new HistoryRecord(11.0, TestCategoryConstant.ANOTHER_CATEGORY, "tag1", "tag2")));
     }
 
     @Test
     void shouldAppendHistoryDataWhenRecordValueWithoutTags() {
         statsService.recordValue(12L, TestCategoryConstant.ANOTHER_CATEGORY);
 
-        verify(historyDataDao)
-                .append(eq(new HistoryDataModel(12.0, TestCategoryConstant.ANOTHER_CATEGORY)));
+        verify(historyDao)
+                .append(eq(new HistoryRecord(12.0, TestCategoryConstant.ANOTHER_CATEGORY)));
     }
 
     @Test
@@ -83,17 +81,17 @@ class StatsServiceTest {
 
     @Test
     void shouldReturnTagHistoryDataWhenFindByTag() {
-        List<HistoryDataModel> tagHistoryData = Arrays.asList(
-                new HistoryDataModel(10.0, TestCategoryConstant.CATEGORY, TestTagConstant.TAG),
-                new HistoryDataModel(11.0, TestCategoryConstant.ANOTHER_CATEGORY, TestTagConstant.TAG));
+        List<HistoryRecord> tagHistoryRecordData = Arrays.asList(
+                new HistoryRecord(10.0, TestCategoryConstant.CATEGORY, TestTagConstant.TAG),
+                new HistoryRecord(11.0, TestCategoryConstant.ANOTHER_CATEGORY, TestTagConstant.TAG));
 
         Mockito.lenient()
-                .when(historyDataDao.findByTag(TestTagConstant.TAG))
-                .thenReturn(tagHistoryData);
+                .when(historyDao.findByTag(TestTagConstant.TAG))
+                .thenReturn(tagHistoryRecordData);
 
-        Collection<HistoryDataModel> historyDataByTag = statsService.findByTag(TestTagConstant.TAG);
+        Collection<HistoryRecord> historyRecordByTag = statsService.findByTag(TestTagConstant.TAG);
 
-        assertIterableEquals(tagHistoryData, historyDataByTag);
+        assertIterableEquals(tagHistoryRecordData, historyRecordByTag);
     }
 
     @Test
@@ -106,20 +104,20 @@ class StatsServiceTest {
 
     @Test
     void shouldReturnNotNullTimerWhenRegisterTimer() {
-        TimerModel timerModel = statsService.registerTimer(TestCategoryConstant.CATEGORY);
+        Timer timer = statsService.registerTimer(TestCategoryConstant.CATEGORY);
 
-        assertNotNull(timerModel, "registered timer should be not null");
+        assertNotNull(timer, "registered timer should be not null");
     }
 
     @Test
     void shouldRecordValueWhenRegisterTimerStopped() {
-        TimerModel timerModel = statsService.registerTimer(TestCategoryConstant.CATEGORY, TestTagConstant.TAG);
-        ArgumentCaptor<HistoryDataModel> captor = ArgumentCaptor.forClass(HistoryDataModel.class);
+        Timer timer = statsService.registerTimer(TestCategoryConstant.CATEGORY, TestTagConstant.TAG);
+        ArgumentCaptor<HistoryRecord> captor = ArgumentCaptor.forClass(HistoryRecord.class);
 
-        timerModel.recordTimeInterval();
-        verify(historyDataDao, times(1))
+        timer.recordTimeInterval();
+        verify(historyDao, times(1))
                 .append(captor.capture());
-        HistoryDataModel model = captor.getValue();
+        HistoryRecord model = captor.getValue();
 
         assertAll(() -> assertTrue(model.getValue() > 0, "HistoryDataModel should have positive value"),
                 () -> assertEquals(TestCategoryConstant.CATEGORY, model.getCategory()),

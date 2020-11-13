@@ -1,4 +1,4 @@
-package ua.arlabunakty.core.model;
+package ua.arlabunakty.core.domain;
 
 public class Clock {
     /**

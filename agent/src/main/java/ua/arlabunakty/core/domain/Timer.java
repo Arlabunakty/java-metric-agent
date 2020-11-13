@@ -1,4 +1,4 @@
-package ua.arlabunakty.core.model;
+package ua.arlabunakty.core.domain;
 
 import java.util.Arrays;
 import ua.arlabunakty.core.service.TimerDataConsumer;
@@ -6,7 +6,7 @@ import ua.arlabunakty.core.service.TimerDataConsumer;
 /**
  * This class is thread-safe.
  */
-public final class TimerModel {
+public final class Timer {
     private final long start;
     private final Clock clock;
     private final TimerDataConsumer consumer;
@@ -22,7 +22,7 @@ public final class TimerModel {
      * @param category - the category of the timer.
      * @param tags - the tags of the timer.
      */
-    public TimerModel(Clock clock, TimerDataConsumer consumer, String category, String... tags) {
+    public Timer(Clock clock, TimerDataConsumer consumer, String category, String... tags) {
         this.start = clock.getTimeInMilliseconds();
         this.clock = clock;
         this.consumer = consumer;

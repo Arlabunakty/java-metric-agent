@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ua.arlabunakty.core.domain.Clock;
+import ua.arlabunakty.core.domain.Timer;
 import ua.arlabunakty.core.service.TimerDataConsumer;
 
 @ExtendWith(MockitoExtension.class)
-class TimerModelTest {
+class TimerTest {
 
     @Mock
     private TimerDataConsumer consumer;
@@ -24,9 +26,9 @@ class TimerModelTest {
         when(clock.getTimeInMilliseconds())
                 .thenReturn(0L, 10000L);
 
-        TimerModel timerModel = new TimerModel(clock, consumer, "testTimeInterval", "tag");
+        Timer timer = new Timer(clock, consumer, "testTimeInterval", "tag");
 
-        timerModel.recordTimeInterval();
+        timer.recordTimeInterval();
 
         verify(consumer)
                 .recordValue(eq(10000L), eq("testTimeInterval"), eq("tag"));
