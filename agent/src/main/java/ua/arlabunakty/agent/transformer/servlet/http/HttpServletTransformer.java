@@ -23,8 +23,13 @@ public class HttpServletTransformer implements ClassFileTransformer {
     private final String targetClassName;
 
     public HttpServletTransformer(Class<?> clazz) {
-        targetClassLoader = clazz.getClassLoader();
-        targetClassName = clazz.getName();
+        this.targetClassLoader = clazz.getClassLoader();
+        this.targetClassName = clazz.getName();
+    }
+
+    public HttpServletTransformer(String targetClassName) {
+        this.targetClassName = targetClassName;
+        targetClassLoader = null;
     }
 
     @Override
@@ -35,7 +40,7 @@ public class HttpServletTransformer implements ClassFileTransformer {
             return classFileBuffer;
         }
 
-        if (!loader.equals(targetClassLoader)) {
+        if (targetClassLoader != null && !loader.equals(targetClassLoader)) {
             return classFileBuffer;
         }
 

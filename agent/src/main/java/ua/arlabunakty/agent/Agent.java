@@ -9,6 +9,7 @@ import ua.arlabunakty.httpserver.EmbeddedHttpServer;
 
 public final class Agent {
     private static final Logger LOGGER = Logger.getLogger(Agent.class.getName());
+    private static final String HTTP_HTTP_SERVLET_CLASS_NAME = "javax.servlet.http.HttpServlet";
 
     private Agent() {
 
@@ -20,30 +21,21 @@ public final class Agent {
     public static void premain(String agentArgs, Instrumentation instrumentation) {
         LOGGER.fine("[Agent] premain method");
 
-        transformClass("javax.servlet.http.HttpServlet", instrumentation);
-    }
-
-    private static void transformClass(String className, Instrumentation instrumentation) {
-        // see if we can get the class using forName
-        try {
-            Class<?> targetCls = Class.forName(className);
-            transformAndStartWebServer(targetCls, instrumentation);
-            return;
-        } catch (Exception ex) {
-            LOGGER.log(Level.FINE, "Class [{}] not found with Class.forName", className);
-        }
-
-        // otherwise iterate all loaded classes and find what we want
         for (Class<?> clazz : instrumentation.getAllLoadedClasses()) {
-            if (clazz.getName().equals(className)) {
-                transformAndStartWebServer(clazz, instrumentation);
+            if (clazz.getName().equals(HTTP_HTTP_SERVLET_CLASS_NAME)) {
+                transform(clazz, instrumentation);
                 return;
             }
         }
-        throw new IllegalStateException("Failed to find class [" + className + "]");
+        ClassFileTransformer cft = new HttpServletTransformer(HTTP_HTTP_SERVLET_CLASS_NAME);
+        instrumentation.addTransformer(cft, true);
+
+        EmbeddedHttpServer.start();
     }
 
-    private static void transformAndStartWebServer(Class<?> clazz, Instrumentation instrumentation) {
+    private static void transform(Class<?> clazz, Instrumentation instrumentation) {
+        LOGGER.info("[Agent] transform loaded class");
+
         ClassFileTransformer cft = new HttpServletTransformer(clazz);
         instrumentation.addTransformer(cft, true);
         try {
@@ -52,6 +44,5 @@ public final class Agent {
         } catch (Exception ex) {
             throw new IllegalStateException("Transform failed for class: [" + clazz.getName() + "]", ex);
         }
-        EmbeddedHttpServer.start();
     }
 }
